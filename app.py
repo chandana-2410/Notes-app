@@ -76,3 +76,37 @@ def edit_note(note_id):
 
 if __name__ == '__main__':
     app.run(debug=True)
+
+NOTES_FILE = "notes.json"
+
+# Load existing notes
+def load_notes():
+    if os.path.exists(NOTES_FILE):
+        with open(NOTES_FILE, "r") as file:
+            return json.load(file)
+    return []
+
+# Save notes to file
+def save_notes(notes):
+    with open(NOTES_FILE, "w") as file:
+        json.dump(notes, file, indent=4)
+
+@app.route("/", methods=["GET"])
+def home():
+    notes = load_notes()
+    return render_template("index.html", notes=notes)
+
+@app.route("/add", methods=["POST"])
+def add_note():
+    title = request.form.get("title")
+    content = request.form.get("content")
+
+    notes = load_notes()
+    notes.append({"title": title, "content": content})
+    save_notes(notes)
+
+    return home()
+
+if __name__ == "__main__":
+    app.run(debug=True)
+
