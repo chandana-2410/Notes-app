@@ -96,16 +96,16 @@ def home():
     notes = load_notes()
     return render_template("index.html", notes=notes)
 
-@app.route("/add", methods=["POST"])
-def add_note():
-    title = request.form.get("title")
-    content = request.form.get("content")
+# @app.route("/add", methods=["POST"])
+# def add_note():
+#     title = request.form.get("title")
+#     content = request.form.get("content")
 
-    notes = load_notes()
-    notes.append({"title": title, "content": content})
-    save_notes(notes)
+#     notes = load_notes()
+#     notes.append({"title": title, "content": content})
+#     save_notes(notes)
 
-    return home()
+#     return home()
 
 if __name__ == "__main__":
     app.run(debug=True)
